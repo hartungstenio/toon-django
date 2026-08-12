@@ -80,6 +80,9 @@ exclude_lines = [
 [tool.django-stubs]
 django_settings_module = "tests.testapp.settings"
 
+[tool.hatch]
+requires-hatch = ">=1.18.0"
+
 [tool.hatch.version]
 source = "vcs"
 
@@ -117,6 +120,7 @@ extra-dependencies = [
   "pytest-asyncio",
   "pytest-django",
 ]
+features = ["dmr"]
 
 [tool.hatch.envs.hatch-test.overrides]
 matrix.django.dependencies = [
