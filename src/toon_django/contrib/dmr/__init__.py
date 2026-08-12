@@ -9,6 +9,7 @@ Example::
 
     from toon_django.contrib.dmr import ToonParser, ToonRenderer
 
+
     class MyController(Controller):
         parsers = [ToonParser()]
         renderers = [ToonRenderer()]
@@ -16,7 +17,7 @@ Example::
 
 from collections.abc import Callable, Mapping
 from http import HTTPStatus
-from typing import Any, override
+from typing import Any
 
 import toon_format as toon
 from django.http import HttpRequest
@@ -25,6 +26,8 @@ from dmr.metadata import EndpointMetadata, ResponseSpec
 from dmr.parsers import DeserializeFunc, Parser, Raw
 from dmr.renderers import Renderer
 from dmr.serializer import BaseSerializer
+
+from toon_django._compat import override
 
 
 class ToonParser(Parser):

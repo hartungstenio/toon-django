@@ -7,10 +7,12 @@ Token-Oriented Object Notation (TOON) format and sets the appropriate
 """
 
 from collections.abc import Mapping
-from typing import Any, NotRequired, TypedDict, Unpack
+from typing import Any, TypedDict
 
 import toon_format as toon
 from django.http import HttpResponse
+
+from ._compat import NotRequired, Unpack
 
 
 class _HttpResponseBaseParams(TypedDict):
@@ -42,7 +44,7 @@ class ToonResponse(HttpResponse):
         safe: bool = True,
         options: toon.EncodeOptions | None = None,
         **kwargs: Unpack[_HttpResponseBaseParams],
-    ):
+    ) -> None:
         """Serialize *data* and initialize the HTTP response.
 
         Args:
