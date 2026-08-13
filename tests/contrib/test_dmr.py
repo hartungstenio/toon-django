@@ -1,7 +1,11 @@
 from http import HTTPStatus
 from unittest.mock import MagicMock
 
+import pytest
 import toon_format as toon
+
+pytest.importorskip("dmr")
+
 from dmr.test import DMRRequestFactory
 
 from toon_django.contrib.dmr import ToonParser, ToonRenderer
