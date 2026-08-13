@@ -31,7 +31,7 @@ classifiers = [
 dependencies = [
   "django (>=5.2)",
   "toon-format (>=0.9.0b1)",
-  "typing-extensions; python_version < '3.12'"
+  "typing-extensions; python_version < '3.12'",
 ]
 dynamic = ["version"]
 
@@ -49,7 +49,7 @@ dev = [
   "pytest-asyncio",
   "pytest-deadfixtures",
   "pytest-django",
-  { include-group = "types" }
+  { include-group = "types" },
 ]
 types = [
   "django-stubs",
@@ -144,7 +144,13 @@ dependencies = ["ruff"]
 [tool.mypy]
 strict = true
 files = ["src"]
+enable_error_code = "deprecated"
 plugins = ["mypy_django_plugin.main"]
+
+[tool.pyrefly]
+project-includes = ["src"]
+preset = "strict"
+min-severity = "ignore"
 
 [tool.pytest.ini_options]
 pythonpath = [".", "src"]
