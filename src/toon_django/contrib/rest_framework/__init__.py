@@ -3,7 +3,7 @@
 Provides a :class:`ToonParser` and a :class:`ToonRenderer` that plug the
 Token-Oriented Object Notation (TOON) format into the DRF content-negotiation
 pipeline.  Register them on a view or viewset to accept and emit
-``application/x-toon`` alongside any other formats DRF already supports.
+``text/toon`` alongside any other formats DRF already supports.
 
 Example::
 
@@ -28,7 +28,7 @@ from toon_django._compat import override
 
 
 class ToonParser(BaseParser):
-    """DRF parser that deserializes ``application/x-toon`` request bodies.
+    """DRF parser that deserializes ``text/toon`` request bodies.
 
     Decodes an incoming byte stream into a Python object using
     :func:`toon_format.decode`, respecting the encoding declared in the
@@ -37,7 +37,7 @@ class ToonParser(BaseParser):
     ``400 Bad Request`` response.
     """
 
-    media_type = "application/x-toon"
+    media_type = "text/toon"
 
     @override
     def parse(
@@ -52,7 +52,7 @@ class ToonParser(BaseParser):
             stream: The raw request body stream to read and decode.
             media_type: The media type of the incoming request (unused; the
                 parser is only invoked when DRF has already matched
-                ``application/x-toon``).
+                ``text/toon``).
             parser_context: Optional dictionary supplied by DRF containing
                 contextual information such as ``"encoding"`` (defaults to
                 ``"utf-8"`` when absent).
@@ -76,15 +76,15 @@ class ToonParser(BaseParser):
 
 
 class ToonRenderer(BaseRenderer):
-    """DRF renderer that serializes response data as ``application/x-toon``.
+    """DRF renderer that serializes response data as ``text/toon``.
 
     Encodes any Python object to TOON bytes using :func:`toon_format.encode`.
     The renderer is selected by DRF's content negotiation when the client
-    sends ``Accept: application/x-toon`` or when it is the only renderer
+    sends ``Accept: text/toon`` or when it is the only renderer
     configured on the view.
     """
 
-    media_type = "application/x-toon"
+    media_type = "text/toon"
 
     @override
     def render(
@@ -99,7 +99,7 @@ class ToonRenderer(BaseRenderer):
             data: The Python object to encode (typically the serializer's
                 validated output).
             accepted_media_type: The media type accepted by the client
-                (unused; already matched to ``application/x-toon`` by DRF).
+                (unused; already matched to ``text/toon`` by DRF).
             renderer_context: Optional dictionary supplied by DRF with
                 request/response context (unused by this renderer).
 

@@ -11,13 +11,13 @@ class TestToonResponse:
         response = ToonResponse({"key": "value"})
 
         assert response.status_code == HTTPStatus.OK
-        assert response["Content-Type"] == "application/x-toon"
+        assert response["Content-Type"] == "text/toon"
         assert toon.decode(response.content.decode()) == {"key": "value"}
 
     def test_custom_content_type(self) -> None:
-        response = ToonResponse({}, content_type="application/x-toon; charset=utf-8")
+        response = ToonResponse({}, content_type="text/toon; charset=utf-8")
 
-        assert response["Content-Type"] == "application/x-toon; charset=utf-8"
+        assert response["Content-Type"] == "text/toon; charset=utf-8"
 
     def test_custom_status_code(self) -> None:
         response = ToonResponse({}, status=HTTPStatus.CREATED)

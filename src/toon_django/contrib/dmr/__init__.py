@@ -2,7 +2,7 @@
 
 Provides a :class:`ToonParser` and a :class:`ToonRenderer` that plug the
 Token-Oriented Object Notation (TOON) format into the DMR content-negotiation
-pipeline.  Register them on a controller to accept and emit ``application/x-toon``
+pipeline.  Register them on a controller to accept and emit ``text/toon``
 alongside any other formats DMR already supports.
 
 Example::
@@ -33,7 +33,7 @@ if sys.version_info >= (3, 11):
     from toon_django._compat import override
 
     class ToonParser(Parser):
-        """DMR parser that deserializes ``application/x-toon`` request bodies.
+        """DMR parser that deserializes ``text/toon`` request bodies.
 
         Decodes raw TOON bytes into a Python object using
         :func:`toon_format.decode`.  The resulting value is then handed to the
@@ -42,7 +42,7 @@ if sys.version_info >= (3, 11):
 
         __slots__: tuple[str, ...] = ()
 
-        content_type = "application/x-toon"
+        content_type = "text/toon"
 
         @override
         def parse(
@@ -78,7 +78,7 @@ if sys.version_info >= (3, 11):
             return []
 
     class ToonRenderer(Renderer):
-        """DMR renderer that serializes response data as ``application/x-toon``.
+        """DMR renderer that serializes response data as ``text/toon``.
 
         Encodes any Python object to TOON bytes using :func:`toon_format.encode`,
         applying the controller's serializer hook before encoding so that model
@@ -87,7 +87,7 @@ if sys.version_info >= (3, 11):
 
         __slots__: tuple[str, ...] = ()
 
-        content_type = "application/x-toon"
+        content_type = "text/toon"
 
         @override
         def render(
