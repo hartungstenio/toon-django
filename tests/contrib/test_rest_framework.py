@@ -13,7 +13,7 @@ from toon_django.contrib.rest_framework import ToonParser, ToonRenderer
 
 class TestToonParser:
     def test_media_type(self) -> None:
-        assert ToonParser.media_type == "application/x-toon"
+        assert ToonParser.media_type == "text/toon"
 
     def test_parse_dict(self) -> None:
         data = {"key": "value"}
@@ -51,7 +51,7 @@ class TestToonParser:
 
 class TestToonRenderer:
     def test_media_type(self) -> None:
-        assert ToonRenderer.media_type == "application/x-toon"
+        assert ToonRenderer.media_type == "text/toon"
 
     def test_render_returns_bytes(self) -> None:
         result = ToonRenderer().render({"key": "value"})

@@ -10,14 +10,14 @@ from toon_django.contrib.ninja import ToonParser, ToonRenderer
 
 class TestToonParser:
     def test_parse_body_dict(self, rf: RequestFactory) -> None:
-        request = rf.post("/", data=toon.encode({"key": "value"}).encode(), content_type="application/x-toon")
+        request = rf.post("/", data=toon.encode({"key": "value"}).encode(), content_type="text/toon")
 
         result = ToonParser().parse_body(request)
 
         assert result == {"key": "value"}
 
     def test_parse_body_list(self, rf: RequestFactory) -> None:
-        request = rf.post("/", data=toon.encode([1, 2, 3]).encode(), content_type="application/x-toon")
+        request = rf.post("/", data=toon.encode([1, 2, 3]).encode(), content_type="text/toon")
 
         result = ToonParser().parse_body(request)
 
@@ -25,7 +25,7 @@ class TestToonParser:
 
     def test_parse_body_nested_structure(self, rf: RequestFactory) -> None:
         data = {"user": {"name": "Jane", "age": 30}}
-        request = rf.post("/", data=toon.encode(data).encode(), content_type="application/x-toon")
+        request = rf.post("/", data=toon.encode(data).encode(), content_type="text/toon")
 
         result = ToonParser().parse_body(request)
 
@@ -34,7 +34,7 @@ class TestToonParser:
 
 class TestToonRenderer:
     def test_media_type(self) -> None:
-        assert ToonRenderer.media_type == "application/x-toon"
+        assert ToonRenderer.media_type == "text/toon"
 
     def test_render_returns_bytes(self, rf: RequestFactory) -> None:
         request = rf.get("/")
@@ -62,7 +62,7 @@ class TestToonRenderer:
         request = rf.get("/")
         rendered = ToonRenderer().render(request, data, response_status=200)
 
-        parse_request = rf.post("/", data=rendered, content_type="application/x-toon")
+        parse_request = rf.post("/", data=rendered, content_type="text/toon")
         parsed = ToonParser().parse_body(parse_request)
 
         assert parsed == data

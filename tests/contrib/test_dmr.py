@@ -13,10 +13,10 @@ from toon_django.contrib.dmr import ToonParser, ToonRenderer
 
 class TestToonParser:
     def test_content_type(self) -> None:
-        assert ToonParser().content_type == "application/x-toon"
+        assert ToonParser().content_type == "text/toon"
 
     def test_parse_dict(self, dmr_rf: DMRRequestFactory) -> None:
-        request = dmr_rf.post("/", content_type="application/x-toon")
+        request = dmr_rf.post("/", content_type="text/toon")
         payload = toon.encode({"key": "value"}).encode()
 
         result = ToonParser().parse(payload, request=request, model=dict)
@@ -24,7 +24,7 @@ class TestToonParser:
         assert result == {"key": "value"}
 
     def test_parse_list(self, dmr_rf: DMRRequestFactory) -> None:
-        request = dmr_rf.post("/", content_type="application/x-toon")
+        request = dmr_rf.post("/", content_type="text/toon")
         payload = toon.encode([1, 2, 3]).encode()
 
         result = ToonParser().parse(payload, request=request, model=list)
@@ -32,7 +32,7 @@ class TestToonParser:
         assert result == [1, 2, 3]
 
     def test_parse_nested_structure(self, dmr_rf: DMRRequestFactory) -> None:
-        request = dmr_rf.post("/", content_type="application/x-toon")
+        request = dmr_rf.post("/", content_type="text/toon")
         data = {"user": {"name": "Jane", "age": 30}}
         payload = toon.encode(data).encode()
 
@@ -41,7 +41,7 @@ class TestToonParser:
         assert result == data
 
     def test_parse_ignores_deserializer_hook(self, dmr_rf: DMRRequestFactory) -> None:
-        request = dmr_rf.post("/", content_type="application/x-toon")
+        request = dmr_rf.post("/", content_type="text/toon")
         payload = toon.encode({"x": 1}).encode()
         hook = MagicMock()
 
@@ -61,7 +61,7 @@ class TestToonParser:
 
 class TestToonRenderer:
     def test_content_type(self) -> None:
-        assert ToonRenderer().content_type == "application/x-toon"
+        assert ToonRenderer().content_type == "text/toon"
 
     def test_render_returns_bytes(self) -> None:
         result = ToonRenderer().render({"key": "value"}, serializer_hook=lambda x: x)
@@ -81,7 +81,7 @@ class TestToonRenderer:
     def test_render_roundtrip(self, dmr_rf: DMRRequestFactory) -> None:
         data = {"id": 1, "name": "test"}
         rendered = ToonRenderer().render(data, serializer_hook=lambda x: x)
-        request = dmr_rf.post("/", content_type="application/x-toon")
+        request = dmr_rf.post("/", content_type="text/toon")
 
         parsed = ToonParser().parse(rendered, request=request, model=dict)
 

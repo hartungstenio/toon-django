@@ -3,7 +3,7 @@
 Provides a :class:`ToonParser` and a :class:`ToonRenderer` that plug the
 Token-Oriented Object Notation (TOON) format into Django Ninja's
 content-negotiation pipeline.  Pass them to the ``NinjaAPI`` constructor to
-accept and emit ``application/x-toon`` alongside any other formats Ninja
+accept and emit ``text/toon`` alongside any other formats Ninja
 already supports.
 
 Example::
@@ -27,7 +27,7 @@ from toon_django._compat import override
 
 
 class ToonParser(Parser):
-    """Django Ninja parser that deserializes ``application/x-toon`` request bodies.
+    """Django Ninja parser that deserializes ``text/toon`` request bodies.
 
     Decodes raw TOON bytes into a plain Python dictionary using
     :func:`toon_format.decode`.  The result is returned as :class:`DictStrAny`
@@ -50,13 +50,13 @@ class ToonParser(Parser):
 
 
 class ToonRenderer(BaseRenderer):
-    """Django Ninja renderer that serializes response data as ``application/x-toon``.
+    """Django Ninja renderer that serializes response data as ``text/toon``.
 
     Encodes any Python object to TOON bytes using :func:`toon_format.encode`,
-    setting the response ``Content-Type`` to ``application/x-toon``.
+    setting the response ``Content-Type`` to ``text/toon``.
     """
 
-    media_type = "application/x-toon"
+    media_type = "text/toon"
 
     @override
     def render(self, request: HttpRequest, data: Any, *, response_status: int) -> Any:

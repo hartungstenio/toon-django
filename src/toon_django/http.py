@@ -34,7 +34,7 @@ class ToonResponse(HttpResponse):
 
     Behaves exactly like :class:`~django.http.HttpResponse`, but encodes the
     payload with :func:`toon_format.encode` and defaults the ``Content-Type``
-    to ``application/x-toon``.
+    to ``text/toon``.
     """
 
     def __init__(
@@ -66,6 +66,6 @@ class ToonResponse(HttpResponse):
             msg = "In order to allow non-dict objects to be serialized set the safe parameter to False."
             raise TypeError(msg)
 
-        kwargs.setdefault("content_type", "application/x-toon")
+        kwargs.setdefault("content_type", "text/toon")
         data = toon.encode(data, options=options)
         super().__init__(content=data, **kwargs)
