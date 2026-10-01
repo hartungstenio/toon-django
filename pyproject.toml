@@ -43,6 +43,7 @@ Source = "https://github.com/hartungstenio/toon-django"
 [project.optional-dependencies]
 dmr = ["django-modern-rest"]
 drf = ["djangorestframework"]
+ninja = ["django-ninja"]
 
 [dependency-groups]
 dev = [
@@ -93,7 +94,7 @@ python = ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
 [tool.hatch.envs.default]
 dependency-groups = ["dev"]
-features = ["dmr", "drf"]
+features = ["dmr", "drf", "ninja"]
 
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
@@ -109,7 +110,7 @@ cov = [
 
 [tool.hatch.envs.hatch-check-types]
 dependency-groups = ["types"]
-features = ["dmr", "drf"]
+features = ["dmr", "drf", "ninja"]
 
 [tool.hatch.envs.hatch-check-types.scripts]
 check = [
@@ -122,7 +123,7 @@ extra-dependencies = [
   "pytest-asyncio",
   "pytest-django",
 ]
-features = ["dmr", "drf"]
+features = ["dmr", "drf", "ninja"]
 
 [tool.hatch.envs.hatch-test.overrides]
 matrix.django.dependencies = [
